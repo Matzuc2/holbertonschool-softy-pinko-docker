@@ -1,30 +1,27 @@
 services:
-  back:
+  back-end:
     build:
       context: ./back-end
       dockerfile: Dockerfile
     networks:
       - app-network
 
-  front:
+  front-end:
     build: 
       context: ./front-end
       dockerfile: Dockerfile
-    depends_on:
-      - back
     networks:
       - app-network
 
   proxy:
-    image: nginx
     build:
       context: ./proxy
       dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
-      - back
-      - front
+      - back-end
+      - front-end
     networks:
       - app-network
 
